@@ -13,14 +13,15 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("FLASK_APP_API") # click main go to edit config find edit environment in environment and include key  and value
-
+print(app.config['SECRET_KEY'])
 ckeditor = CKEditor(app)
 Bootstrap(app)
 # This will give user avatars / has jinja templating in post.html under div class="commenterImage"
 gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False, base_url=None)
 
 ##CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+# sql lite db is still an option incase we are developing files locally
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",  "sqlite:///blog.db")  # added database url frm heroku postgree sql because sql lite deployed w heroku will wipe db everyday/ postgres will allow db to store more files for longer
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
