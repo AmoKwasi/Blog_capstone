@@ -9,9 +9,11 @@ from sqlalchemy.orm import relationship  # database relationships
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from forms import LoginForm, RegisterForm, CreatePostForm, CommentForm   #imports from forms
 from flask_gravatar import Gravatar    # creates avatar for users
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.environ.get("FLASK_APP_API") # click main go to edit config find edit environment in environment and include key  and value
+
 ckeditor = CKEditor(app)
 Bootstrap(app)
 # This will give user avatars / has jinja templating in post.html under div class="commenterImage"
